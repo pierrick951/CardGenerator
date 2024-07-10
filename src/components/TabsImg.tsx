@@ -9,7 +9,7 @@ type RangeInput = {
 const rangeInputs: RangeInput[] = [
   { label: 'Warmth', id: 'warmth', min: 0, max: 100, initialValue: 50 },
   { label: 'Sepia', id: 'sepia', min: 0, max: 10, initialValue: 5 },
-  { label: 'Invert', id: 'invert', min: 0, max: 255, initialValue: 128 },
+  { label: 'Invert', id: 'invert', min: 0, max: 255, initialValue:0 },
 ];
 
 function TabsImg() {
