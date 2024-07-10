@@ -5,6 +5,7 @@ export type BooleanType = [boolean, React.Dispatch<React.SetStateAction<boolean>
 
 
 export type FormField = {
+    id:string
     label: string;
     value: string;
   };
@@ -14,3 +15,19 @@ export  type ButtonType = {
   text: string;
   content?: JSX.Element;
 }
+
+export interface StringVoid {
+  (newText: string): void;
+}
+export interface NumVoid {
+  (newPrice: number):  void;
+}
+
+export interface AreaVoid {
+  (newTextArea: string): void
+}
+
+// export type InputType {
+//     id: string;
+//     textInput: string;
+// }

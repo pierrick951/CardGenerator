@@ -1,8 +1,21 @@
+import useStore from "../store";
+import useTextArea from "../store.area";
+import usePrice from "../store.price";
+
+
+
 type Props = {
   fichier: string | ArrayBuffer | null;
 };
 
 function CardItem({ fichier }: Props) {
+
+  const text:string = useStore((state) => state.text);
+  const textArea:string = useTextArea((state) => state.textArea)
+  const price: number = usePrice((state)=> state.price)
+
+
+
   return (
     <div className=" bg-gradient-to-br from-white to-gray-300   h-auto w-full lg:w-80 flex flex-col rounded-xl shadow-2xl  ">
       <div className=" flex flex-col">
@@ -17,17 +30,16 @@ function CardItem({ fichier }: Props) {
         )}
       </div>
       <div className="p-4 flex flex-row items-center justify-between">
-        <h2 className="text-2xl text-zinc-800 font-semibold">item</h2>
+        <h2 className="text-2xl text-zinc-800 font-semibold capitalize">{text}</h2>
         <p className="font-mono text-zinc-900">
-          <span>9.99</span>
+          <span>{price}</span>
           <span>$</span>
         </p>
       </div>
       <div>
         <p className="p-4 text-zinc-700 word-wrap-normal
         ">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officiis,lorem500
-
+         {textArea}
         </p>
       </div>
     </div>

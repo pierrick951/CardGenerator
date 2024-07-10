@@ -2,9 +2,8 @@ import { useState } from "react";
 import CardItem from "./components/CardItem";
 import Header from "./components/Header";
 import LeftContainer from "./components/LeftContainer";
-import { Store, ContactRound, List } from "lucide-react";
+import { Store,  List } from "lucide-react";
 import { ButtonType } from "./Typscript/TabsType";
-import CardProfile from "./components/CardProfile";
 import CardPrice from "./components/CardPrice";
 
 function App() {
@@ -24,7 +23,6 @@ function App() {
 
   const buttons: ButtonType[] = [
     { icon: <Store color="#ffffff" />, text: "Store" },
-    { icon: <ContactRound color="#ffffff" />, text: "Contact" },
     { icon: <List color="#ffffff" />, text: "List" },
   ];
 
@@ -57,13 +55,7 @@ function App() {
             </div>
             
           )}
-          {activeButton !== null && buttons[activeButton].text === "Contact" && (
-            <div>
-              <CardProfile fichier={image} />
-       
-            </div>
-            
-          )}
+         
           {activeButton !== null && buttons[activeButton].text === "List" && (
             <div>
               <CardPrice/>

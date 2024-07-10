@@ -1,44 +1,38 @@
-import { BadgeCheck } from "lucide-react"
+import useInputText from "../store.input";
+import { BadgeCheck } from "lucide-react";
+import useStore from "../store";
+import useTextArea from "../store.area";
 
-type Props = {}
-
-function CardPrice({}: Props) {
+const CardPrice: React.FC = () => {
+  const text: string = useStore((state) => state.text);
+  const textArea: string = useTextArea((state) => state.textArea);
+  const items = useInputText((state) => state.items);
+  const displayItems = items.slice(0, 5);
   return (
-    <div className="bg-gradient-to-br from-white to-gray-300   h-auto w-auto flex flex-col rounded-xl shadow-2xl p-2 justify-between">
-         <div className="">
-             <h2 className="text-2xl text-zinc-800 font-semibold pb-2">Service</h2>
-             <hr  className="w-full bg-gray-300 border- "/>
-         </div>
-            <ul className=" overflow-clip ">
-                <li className=" flex flex-row gap-2 py-3 font-semibold">
-                <BadgeCheck color="#485ae5" className="w-5" />
-                <span>lorem</span>
-                </li>
-                <li className=" flex flex-row gap-2 py-3 font-semibold ">
-                <BadgeCheck color="#485ae5" className="w-5" />
-                <span>loremgggggggg</span>
-                </li>
-                <li className=" flex flex-row gap-2 py-3 font-semibold">
-                <BadgeCheck color="#485ae5" className="w-5" />
-                <span>lorem</span>
-                </li>
-                <li className=" flex flex-row gap-2 py-3 font-semibold ">
-                <BadgeCheck color="#485ae5" className="w-5" />
-                <span>lorem</span>
-                </li>
-                <li className=" flex flex-row gap-2 py-3 font-semibold">
-                <BadgeCheck color="#485ae5" className="w-5" />
-                <span>lorem</span>
-                </li>
-               
-     
-            
-            </ul>
-            <div className="w-40 py-2 font-mono">
-                    <p>teeeeeeeeeeeeeeeeeuff  feofeqfqd  ekfezfs us?</p>
-                </div>
-       
+    <div className="bg-gradient-to-br from-white to-gray-300 h-auto w-auto flex flex-col rounded-xl shadow-2xl p-2 justify-between">
+      <div className="">
+        <h2 className="text-2xl text-zinc-800 font-semibold pb-2 capitalize">
+          {text}
+        </h2>
+        <hr className="w-full bg-gray-300 border- " />
+      </div>
+      <ul className="overflow-clip">
+        {displayItems.map((item) => (
+          <li key={item.id} className="flex flex-row gap-2 py-3 font-semibold">
+            <BadgeCheck color="#485ae5" className="w-5" />
+            <span>{item.textInput}</span>
+          </li>
+        ))}
+      </ul>
+
+      <p
+        className="p-4 text-zinc-700 word-wrap-normal
+        "
+      >
+        {textArea}
+      </p>
     </div>
-  )
-}
-export default CardPrice
+  );
+};
+
+export default CardPrice;
