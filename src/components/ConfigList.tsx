@@ -1,5 +1,4 @@
 import FormsInputts from "./FormsInputts";
-import useStore from "../store";
 type Props = {
   close: () => void;
 };

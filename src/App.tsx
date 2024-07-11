@@ -2,22 +2,41 @@ import { useState } from "react";
 import CardItem from "./components/CardItem";
 import Header from "./components/Header";
 import LeftContainer from "./components/LeftContainer";
-import { Store,  List } from "lucide-react";
-import { ButtonType } from "./Typscript/TabsType";
+import { Store, List, Tornado } from "lucide-react";
+import { ButtonType, ImgFilter } from './Typscript/TabsType';
 import CardPrice from "./components/CardPrice";
+import useStore from "./store";
+import useTextArea from "./store.area";
+import usePrice from "./store.price";
+import useImageSettingsStore from './store.image';
+
+
 
 function App() {
-  const [image, setImage] = useState<string | ArrayBuffer | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [activeButton, setActiveButton] = useState<number | null>(null);
 
+  const text: string = useStore((state) => state.text);
+  const textArea: string = useTextArea((state) => state.textArea);
+  const price: number = usePrice((state) => state.price);
+  const settings = useImageSettingsStore((state) => state.settings);
+
+  const imgFilter : ImgFilter= {
+
+    Params:
+    
+    {brightParams: `brightness(${settings.warmth}%)`,
+    sepiaParams: `sepia(${settings.sepia / 10})`, 
+    invertParams: `invert(${settings.invert / 255})`}
+  };
+
+
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file = event.target.files?.[0]; 
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+      const imageUrl = URL.createObjectURL(file); 
+      setImageUrl(imageUrl);
     }
   };
 
@@ -26,6 +45,34 @@ function App() {
     { icon: <List color="#ffffff" />, text: "List" },
   ];
 
+  const generateHTML: () => string = () => {
+    
+
+    return `
+    <div className="bg-gradient-to-br max-w-sm from-white to-gray-300 h-auto w-full lg:w-80 flex flex-col rounded-xl shadow-2xl">
+      <div className="flex flex-col">
+        ${imageUrl ? `<img src="${imageUrl}" alt="Uploaded" className="h-44 object-cover w-full rounded-t-xl"  style={{ filter: imgFilter.Params.brightParams }} />` : '<div className="text-gray-500 h-40"></div>'}
+      </div>
+      <div className="p-4 flex flex-row items-center justify-between">
+        <h2 className="text-2xl text-zinc-800 font-semibold capitalize">${text}</h2>
+        <p className="font-mono text-zinc-900"><span>${price}</span><span>$</span></p>
+      </div>
+      <div>
+        <p className="p-4 w-full text-zinc-700 break-words whitespace-normal">${textArea}</p>
+      </div>
+    </div>
+  `;
+};
+  const copyToClipboard: () => void = () => {
+    const html = generateHTML();
+    navigator.clipboard.writeText(html).then(() => {
+      alert("Get Boxed 📦");
+    }).catch((err) => {
+      console.error("Failed to copy HTML: ", err);
+    });
+  };
+
+console.log(imgFilter)
   return (
     <div className="flex flex-col min-h-screen bg-grid-magic w-full p-3">
       <header>
@@ -50,18 +97,14 @@ function App() {
         <div>
           {activeButton !== null && buttons[activeButton].text === "Store" && (
             <div>
-              <CardItem fichier={image} />
-       
+              <CardItem fichier={imageUrl} />
             </div>
-            
           )}
-         
+
           {activeButton !== null && buttons[activeButton].text === "List" && (
             <div>
-              <CardPrice/>
-       
+              <CardPrice />
             </div>
-            
           )}
           <input
             type="file"
@@ -71,6 +114,38 @@ function App() {
           />
         </div>
       </main>
+      <div className="flex items-center w-full justify-center">
+        <button
+          className="flex flex-row gap-3 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-700 p-2 text-white text-xl shadow-2xl"
+          onClick={copyToClipboard}
+        >
+          <span>Get the Code</span>
+          <Tornado color="#ffffff" />
+        </button>
+      </div>
+     
+    
+      
+   
+      <div className="bg-gradient-to-br max-w-sm from-white to-gray-300 h-auto w-full lg:w-80 flex flex-col rounded-xl shadow-2xl">
+      <div className="flex flex-col">
+        <img src="blob:http://localhost:5173/ce2500df-7929-486f-8ca5-b566476e89c6" alt="Uploaded" className="h-44 object-cover w-full rounded-t-xl"  style={{ filter: imgFilter.Params.brightParams }} />
+      </div>
+      <div className="p-4 flex flex-row items-center justify-between">
+        <h2 className="text-2xl text-zinc-800 font-semibold capitalize">rerrrrrrr</h2>
+        <p className="font-mono text-zinc-900"><span>0</span><span>$</span></p>
+      </div>
+      <div>
+        <p className="p-4 w-full text-zinc-700 break-words whitespace-normal">ccfcfefefefce</p>
+      </div>
+    </div>
+  
+  
+   
+   
+  
+  
+     
     </div>
   );
 }

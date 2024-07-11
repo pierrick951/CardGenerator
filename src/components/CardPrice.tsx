@@ -9,7 +9,7 @@ const CardPrice: React.FC = () => {
   const items = useInputText((state) => state.items);
   const displayItems = items.slice(0, 5);
   return (
-    <div className="bg-gradient-to-br from-white to-gray-300 h-auto w-auto flex flex-col rounded-xl shadow-2xl p-2 justify-between">
+    <div className="bg-gradient-to-br max-w-sm from-white to-gray-300 h-auto w-auto flex flex-col rounded-xl shadow-2xl p-2 justify-between">
       <div className="">
         <h2 className="text-2xl text-zinc-800 font-semibold pb-2 capitalize">
           {text}
@@ -25,12 +25,11 @@ const CardPrice: React.FC = () => {
         ))}
       </ul>
 
-      <p
-        className="p-4 text-zinc-700 word-wrap-normal
-        "
-      >
-        {textArea}
-      </p>
+      <div>
+        <p className="  p-4 text-zinc-700 break-words overflow-wrap  text-justify">
+          {textArea}
+        </p>
+      </div>
     </div>
   );
 };
